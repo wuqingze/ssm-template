@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuqingze.dao.StudentDao">
+
+    <resultMap id="studentMap" type="com.wuqingze.entity.Student">
+        <id property="studentId" column="s_id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <select id="queryById" resultType="com.wuqingze.entity.Student" resultMap="studentMap">
+        SELECT * FROM  student WHERE s_id = #{id}
+    </select>
+</mapper>

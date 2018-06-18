@@ -32,4 +32,12 @@
 
     <!-- 4.扫描web相关的bean -->
     <context:component-scan base-package="com.wuqingze.web" />
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.wuqingze.web.interceptor.CrossDomainInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>

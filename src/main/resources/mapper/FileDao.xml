@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuqingze.dao.FileDao">
+
+    <resultMap id="fileMap" type="com.wuqingze.entity.File">
+        <id property="file_id" column="file_id"></id>
+        <result property="path" column="path"></result>
+        <result property="file_name" column="file_name"/>
+    </resultMap>
+
+   <select id="queryByFileID" resultType="com.wuqingze.entity.File" resultMap="fileMap">
+       SELECT * FROM file WHERE file_id = #{file_id}
+   </select>
+
+    <insert id="insert" parameterType="com.wuqingze.entity.File">
+        INSERT INTO file VALUE (#{file_id},#{path},#{file_name})
+    </insert>
+
+</mapper>

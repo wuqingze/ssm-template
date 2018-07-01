@@ -23,4 +23,8 @@
     <select id="queryByPNameAndSid" resultType="com.wuqingze.entity.Honor" resultMap="honorMap">
         SELECT * FROM honor WHERE p_name = #{pName} and s_id = #{sID}
     </select>
+
+    <insert id="insert" parameterType="com.wuqingze.entity.Honor" >
+        INSERT INTO honor VALUE (#{h_id},#{p_name},#{s_id},#{theme},#{introduction},#{explanation},#{checked},#{t_id},#{file_id},#{time})
+    </insert>
 </mapper>

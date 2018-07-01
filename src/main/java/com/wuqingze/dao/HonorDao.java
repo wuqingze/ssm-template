@@ -15,4 +15,6 @@ public interface HonorDao {
     List<Honor> queryByPName(@Param("pName") String pName);
 
     List<Honor> queryByPNameAndSid(@Param("pName") String pName, @Param("sID") String sID);
+
+    int insert(Honor honor);
 }

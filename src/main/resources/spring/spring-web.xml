@@ -38,6 +38,11 @@
             <mvc:mapping path="/**"/>
             <bean class="com.wuqingze.web.interceptor.CrossDomainInterceptor"></bean>
         </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.wuqingze.web.interceptor.AuthoriseInterceptor"></bean>
+        </mvc:interceptor>
     </mvc:interceptors>
 
 </beans>

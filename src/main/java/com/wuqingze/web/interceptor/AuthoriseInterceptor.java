@@ -7,20 +7,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by wuqingze on 2018/6/17.
+ * Created by wuqingze on 2018/7/1.
  */
-public class CrossDomainInterceptor implements HandlerInterceptor {
+public class AuthoriseInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println("authorise interceptor");
+        System.out.println(String.format("request context path is %s",request.getContextPath()));
+        System.out.println(String.format("request path info: %s",request.getPathInfo()));
+        System.out.println(String.format("uri: %s",request.getRequestURI()));
+        if(request.getRequestURI().contains("login")) return true;
+        if(request.getRequestURI().contains("authorise")) return true;
+        if(request.getRequestURI().contains("test")) return true;
 
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8080");
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+        return request.getSession().getAttribute("user") != null;
 
-        System.out.println("*******************");
-        System.out.println("*******************");
-        System.out.println("cross domain intercepter");
-        return true;
     }
 
     @Override

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class HonorDaoTest extends BaseTest{
     @Autowired
-    private HonorDao honorDao;
+    public HonorDao honorDao;
 
     @Test
     public void queryById(){
@@ -33,5 +33,17 @@ public class HonorDaoTest extends BaseTest{
     public void queryByPName() throws JsonProcessingException {
         List<Honor> l = honorDao.queryByPName("shjxx");
         System.out.println(new ObjectMapper().writeValueAsString(l));
+    }
+
+    @Test
+    public void insert(){
+        Honor h = new Honor();
+        h.setH_id("1290");
+        h.setChecked(true);
+        h.setExplanation("hello world");
+        h.setIntroduction("hello world wuqingze");
+        h.setTheme("xxld");
+        int i = honorDao.insert(h);
+        System.out.println(i);
     }
 }

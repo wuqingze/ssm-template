@@ -52,6 +52,7 @@ public class FileController {
     @RequestMapping("/upload")
     public void upload(PrintWriter pw,HttpServletRequest request) throws Exception {
         System.out.println("file upload start");
+
         String fileName = request.getParameter("fileName");
         String fileContent = request.getParameter("fileContent");
 
@@ -60,9 +61,17 @@ public class FileController {
         f.createNewFile();
         FileOutputStream out = new FileOutputStream(f);
 
+        File file = new File();
+        file.setPath(path);
+        file.setFile_name(fileName);
+        file.setFile_id(fileContent.hashCode());
+
+        fileDao.insert(file);
+
         fileContent = fileContent.split("base64,")[1];
         out.write(Base64.getDecoder().decode(fileContent));
         out.close();
+
         pw.write("success");
     }
 

@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.Base64;
+
+import static javax.xml.transform.OutputKeys.ENCODING;
 
 /**
  * Created by wuqingze on 2018/7/1.
@@ -75,5 +77,49 @@ public class FileController {
         pw.write("success");
     }
 
+    @RequestMapping("/download")
+    public void download(String path, HttpServletResponse response){
+        java.io.File file = new java.io.File(   "d:/wqz/test.png");
+        InputStream fis = null;
+        OutputStream os = null;
+        try {
+            if (!file.exists()) {
+                response.getWriter().print("文件不存在");
+            }
+            // 以流的形式下载文件
+            fis = new BufferedInputStream(new FileInputStream(file));
+            // 设置响应报头
+            response.reset();
+            response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(file.getName(),"UTF-8"));
+            response.addHeader("Content-Length", "" + file.length());
+            response.setContentType("image/png");
+            response.setCharacterEncoding("UTF-8");
 
+            // 写入响应流数据
+            os = new BufferedOutputStream(response.getOutputStream());
+            byte[] bytes = new byte[1024];
+            while (fis.read(bytes) != -1) {
+                os.write(bytes);
+            }
+        } catch (Throwable e) {
+            if (e instanceof Exception) {
+                // 浏览器点击取消
+                System.out.println("用户取消下载!");
+            } else {
+                e.printStackTrace();
+            }
+        } finally {
+            try {
+                if (os != null) {
+                    os.close();
+                }
+                if (fis != null) {
+                    fis.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 }
